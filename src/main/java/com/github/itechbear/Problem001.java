@@ -1,8 +1,6 @@
 package com.github.itechbear;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,27 +11,16 @@ public class Problem001 {
     public int[] twoSum(int[] nums, int target) {
       int[] result = new int[2];
 
-      Map<Integer, List<Integer>> hashmap = new HashMap<Integer, List<Integer>>();
+      Map<Integer, Integer> hashmap = new HashMap<Integer, Integer>();
       for (int i = 0; i < nums.length; ++i) {
-        List<Integer> list = hashmap.get(nums[i]);
-        if (null == list) {
-          list = new ArrayList<>();
-          hashmap.put(nums[i], list);
-        }
-        list.add(i);
-      }
-
-      for (Map.Entry<Integer, List<Integer>> entry : hashmap.entrySet()) {
-        int first = entry.getKey();
-        int second = target - first;
-        if (hashmap.containsKey(second)) {
-          result[0] = entry.getValue().get(0);
-          if (first == second) {
-            result[1] = entry.getValue().get(1);
-          } else {
-            result[1] = hashmap.get(second).get(0);
-          }
-          break;
+        int diff = target - nums[i];
+        Integer diffPos = hashmap.get(diff);
+        if (null != diffPos) {
+          result[0] = diffPos;
+          result[1] = i;
+          return result;
+        } else {
+          hashmap.put(nums[i], i);
         }
       }
 
